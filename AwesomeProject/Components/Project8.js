@@ -1,94 +1,91 @@
-import { SafeAreaView, SectionList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-const styles=StyleSheet.create({
-    row:{
-        paddingHorizontal:10,
-        paddingVertical:10
-    },
-    name:{
-        fontSize:16
-    },
-    separator:{
-        backgroundColor:"rgba(0,0,0,0.5)",
-        height:1
-    },
-    sectionHeader:{
-        paddingHorizontal:10,
-        paddingVertical:10,
-        backgroundColor:"rgb(170,170,170))"
-    }
-})
-const groupPeopleByLastName=(_data)=>{
-    const data=[..._data]
-    const groupedData=data.reduce((accumulator, item)=>{
-        const group = item.name.last[0].toUpperCase()
-        if(accumulator[group]){
-            accumulator[group].data.push(item)
-        }else{
-            accumulator[group]={
-                title:group,
-                data:[item]
-            }
-        }
-        return accumulator
-    },{})
-    const sections =Object.keys(groupedData).map((key)=>{
-        return groupedData[key]
-    })
-    return sections.sort((a,b)=>{
-        if(a.title>b.title){
-            return 1
-        }
-        return -1
-    })
+const renderItem=({item})=>{
+    console.log(item)
+    return(
+        <View style={{padding:10, backgroundColor:"gray",justifyContent:"center",borderTopWidth:0.5,borderBottomWidth:0.5}}>
+            <Text>{item.name.firstName+" "+item.name.lastName}</Text>
+        </View>
+    )
 }
 const Project8 =()=>{
     return(
-        <SafeAreaView>
-            <SectionList
-            sections={groupPeopleByLastName(PEOPLE)}
-            keyExtractor={(item)=>`${item.name.first}-${item.name.last}`}
-            renderSectionHeader={({section})=>{
-                return(
-                    <View style={styles.sectionHeader}>
-                        <Text>{section.title}</Text>
-                    </View>
-                )
-            }}
-            renderItem={({item})=>{
-                return(
-                    <View style={styles.row}>
-                        <Text style={styles.name}>
-                            {item.name.first} {item.name.last}
-                        </Text>
-                    </View>
-                )
-            }}
-            ItemSeparatorComponent={()=><View style={styles.separator}/>}           
-            />
-        </SafeAreaView>
+        <FlatList
+            data={DATA}
+            keyExtractor={item=>item.name.id}
+            renderItem={renderItem}
+        />
     )
 }
-const PEOPLE=[
+const DATA=[
 {
     name:{
-        title:"Ms",
-        first:"Maeva",
-        last:"Scott"
+        id:1,
+        firstName:"Maeva",
+        lastName:"Scott"
     }
 },
 {
     name:{
-    title:"Ms",
-    first:"Maelle",
-    last:"Henry"
+        id:2,
+        firstName:"Maelle",
+        lastName:"Henry"
     }
 },
 {   
     name:{
-    title:"Mr",
-    first:"Mohamoud",
-    last:"Faaij"
+        id:3,
+        firstName:"Mohamoud",
+        lastName:"Faaij"
+    }
+},
+{
+    name: {
+        id:4,
+        firstName: "Malia",
+        lastName: "Scott"
+    }
+},
+{
+    name: {
+        id:5,
+        firstName: "Marielle",
+        lastName: "Henry"
+    }
+},
+{
+    name: {
+        id:6,
+        firstName: "Malik",
+        lastName: "Faaij"
+    }
+},
+{
+    name: {
+        id:7,
+        firstName: "Mara",
+        lastName: "Scott"
+    }
+},
+{
+    name: {
+        id:8,
+        firstName: "Mavis",
+        lastName: "Henry"
+    }
+},
+{
+    name: {
+        id:9,
+        firstName: "Mohamed",
+        lastName: "Faaij"
+    }
+},
+{
+    name: {
+        id:10,
+        firstName: "Maddox",
+        lastName: "Faaij"
     }
 }]
 export default Project8

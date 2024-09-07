@@ -37,7 +37,7 @@ const App= ()=>{
           {/* <Project5></Project5> */}
           {/* <Project6></Project6> */}
           {/* <Project7></Project7> */}
-          <Project8></Project8>
+          {/* <Project8></Project8> */}
         </View>
     )
 }
