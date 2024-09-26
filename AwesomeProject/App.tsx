@@ -1,83 +1,49 @@
-import { useState } from "react"
-import { Image, ImageBackground, StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native"
+import { PaperProvider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer"; // Add Drawer navigator
 
-const App=()=>{
-  const[username, setUserName]= useState("sadasdadas")
-  const[count, setCount]=useState(0)
-  const onPress=()=>{
-    setCount(count+1)
-  }
-  return(
-    <View style={myStyle.container}>
-      {/* <View style={{...myStyle.box,backgroundColor:"red"}}>
+import HomeScreen from "./screens/HomeScreen";
+import DetailScreen from "./screens/DetailScreen";
+import CustomDrawerBar from "./Components/CustomDrawerBar"; // Assuming this is custom drawer content
+import CustomNavigationBar from "./Components/CustomNavigationBar";
 
-      </View>
-      <View style={{...myStyle.box,backgroundColor:"green"}}>
+const tbUsers = firestore().collection("USERS");
+const Stack = createStackNavigator();
+const DrawerNav = createDrawerNavigator();
 
-      </View>
-      <View style={{...myStyle.box,backgroundColor:"blue"}}>
+const App = () => {
+  tbUsers
+    .doc("penlika@gmail.com")
+    .set({
+      fullname: "Nguyen Huu Tho",
+      userName: "penlika@gmail.com",
+      password: "123",
+    })
+    .then(() => console.log("Add new user!"));
 
-      </View> */}
+  return (
+    <NavigationContainer>
+      <PaperProvider>
+        <DrawerNav.Navigator
+          drawerContent={(props) => <CustomDrawerBar {...props} />}
+          initialRouteName="Home"
+        >
+          <DrawerNav.Screen name="Home" component={HomeScreen} />
+          <DrawerNav.Screen name="Detail" component={DetailScreen}/>
+        </DrawerNav.Navigator>
+        {/* <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            header:(props)=><CustomNavigationBar {...props}/>,
+          }}>
+            <Stack.Screen name="Home" component={HomeScreen}/>
+            <Stack.Screen name="Detail" component={DetailScreen}/>
+        </Stack.Navigator> */}
+      </PaperProvider>
+    </NavigationContainer>
+  );
+};
 
-      {/* <TextInput
-        style={{height:50,width:"100%",borderColor:"blue",borderWidth:1}}
-        onChangeText={setUserName}
-        //<=>onChangeText={(text)=>setUserName(text)}
-        value={username}
-        keyboardType="default"
-        placeholder="Gà"
-        secureTextEntry={true}
-      /> */}
-
-      {/* <Image
-        //source={require("./image/Screenshop.png")}
-        source={{uri:"https://www.drlsdirect.com/cdn/shop/files/BMW3SeriesF30-YellowHeadlight_DRLsDirect.com.png?v=1685722748&width=750"}}
-        style={{flex:1,width: 400, height: 400}}
-      /> */}
-
-      {/* <ImageBackground
-      source={require("./image/Screenshop.png")}
-      style={{flex:1}}>
-        <Text style={{fontSize:30, color:"red"}}>
-        Hello
-        </Text>
-
-      </ImageBackground> */}
-
-      <Text>Count: {count}</Text>
-      <TouchableHighlight
-      style={myStyle.button}
-      onPress={onPress}>
-        <Text style={myStyle.buttonText}>Press me</Text>
-      </TouchableHighlight>
-    </View>
-  )
-}
-
-export default App
-
-const myStyle=StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:"yellow",
-    flexDirection:"column",
-    justifyContent:"center",
-    alignItems:"center"
-  },
-  box:{
-    height:100,
-    width:100
-  },
-  button:{
-    height:50,
-    width:"90%",
-    borderRadius:95,
-    backgroundColor:"aqua",
-    justifyContent:"center",
-    alignItems:"center"
-  },
-  buttonText:{
-    fontSize:20,
-    fontWeight:"bold"
-  }
-})
+export default App;
