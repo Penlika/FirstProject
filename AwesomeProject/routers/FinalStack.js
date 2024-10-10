@@ -4,20 +4,22 @@ import HomeScreen from "../screens/HomeScreen";
 import CreateNewAccountScreen from "../screens/CreateNewAccountScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import TodoApp from "../screens/todoApp";
+import FinalHome from "../screens/FinalHome";
+import FinalLoginScreen from "../screens/FinalLoginScreen";
+import FinalSignUpScreen from "../screens/FinalSignUpScreen";
 
 const Stack=createStackNavigator()
-const MyStack=()=>{
+const FinalStack=()=>{
     return(
         <Stack.Navigator
-        initialRouteName="login"
+        initialRouteName="Login"
         screenOptions={{
             headerShown:false
         }}>
-            <Stack.Screen name="login" component={LoginScreen}/>
-            <Stack.Screen name="home" component={TodoApp}/>
-            <Stack.Screen name="createNewAccount" component={CreateNewAccountScreen}/>
-            <Stack.Screen name="forgotPassword" component={ForgotPasswordScreen}/>
+            <Stack.Screen name="Login" component={FinalLoginScreen}/>
+            <Stack.Screen name="Home" component={FinalHome}/>
+            <Stack.Screen name="SignUp" component={FinalSignUpScreen}/>
         </Stack.Navigator>
     )
 }
-export default MyStack
+export default FinalStack
